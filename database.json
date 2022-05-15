@@ -1,0 +1,100 @@
+{
+    "categories": [
+        {
+            "id": "GENERAL",
+            "label": "Général",
+            "questions": [
+                {
+                    "label": "Qui est le chef des Armées ?",
+                    "choices": [
+                        {
+                            "label": "Le ministre des Armées"
+                        },
+                        {
+                            "label": "Le chef d'État- major des armées"
+                        },
+                        {
+                            "label": "Le Premier Ministre"
+                        },
+                        {
+                            "label": "Le Président de la République"
+                        },
+                        {
+                            "label": "Le Major général des armées"
+                        }
+                    ],
+                    "correctChoiceIndexes": [1, 3]
+                },
+                {
+                    "label": "Comment s'appelle le chef d'État-major des armées ?",
+                    "choices": [
+                        {
+                            "label": "Thierry Burkhard"
+                        },
+                        {
+                            "label": "François Lecointre"
+                        },
+                        {
+                            "label": "Stéphane Mille"
+                        },
+                        {
+                            "label": "Pierre Schill"
+                        },
+                        {
+                            "label": "Pierre Vandier"
+                        }
+                    ],
+                    "correctChoiceIndexes": [2]
+                }
+            ]
+        },
+        {
+            "id": "ARMEE_DE_TERRE",
+            "label": "Armée de terre",
+            "questions": [
+                {
+                    "label": "Combien d'armes compte l'Armée de Terre ?",
+                    "choices": [
+                        {
+                            "label": "5"
+                        },
+                        {
+                            "label": "6"
+                        },
+                        {
+                            "label": "7"
+                        },
+                        {
+                            "label": "8"
+                        },
+                        {
+                            "label": "10"
+                        }
+                    ],
+                    "correctChoiceIndexes": [3]
+                },
+                {
+                    "label": "Parmi les spécialités suivantes, laquelle n'est pas une arme?",
+                    "choices": [
+                        {
+                            "label": "Aviation Légère de l'Armée de Terre(ALAT)"
+                        },
+                        {
+                            "label": "Génie"
+                        },
+                        {
+                            "label": "Légion étrangère"
+                        },
+                        {
+                            "label": "Arme Blindée Cavalerie"
+                        },
+                        {
+                            "label": "Train"
+                        }
+                    ],
+                    "correctChoiceIndexes": [2]
+                }
+            ]
+        }
+    ]
+}
