@@ -1,48 +1,111 @@
 <div *ngIf="!loaded">
+    <label for="file">Sélectionnez un fichier à charger:</label><br />
     <input
+        id="file"
         type="file"
-        placeholder="Sélectionner"
+        accept=".json"
         (change)="onFileChange($event)"
     />
 </div>
 <div *ngIf="loaded">
     <button (click)="save()">Sauvegarder</button>
-</div>
-<ul>
-    <li *ngFor="let category of db.categories; let i = index">
-        Catégorie {{ i + 1 }}:
-        <input type="text" [(ngModel)]="category.label" /><br />
-        <hr />
-        <ul>
-            <li
-                class="question"
-                *ngFor="let question of category.questions; let j = index"
+    <ul>
+        <li *ngFor="let category of db.categories; let i = index">
+            Catégorie {{ i + 1 }}:
+            <input
+                placeholder="Identifiant en majuscule"
+                style="width: 20%"
+                type="text"
+                [(ngModel)]="category.id"
+            />
+            <input
+                placeholder="Intitulé"
+                style="width: 60%"
+                type="text"
+                [(ngModel)]="category.label"
+            /><br />
+            <button (click)="deleteCategory(category)">
+                X Supprimer catégorie
+            </button>
+            <button
+                (click)="moveUp(db.categories, category)"
+                [disabled]="i === 0"
             >
-                Question {{ j + 1 }}:
-                <input type="text" [(ngModel)]="question.label" /><br />
-                <ul>
-                    <li
-                        class="choice"
-                        *ngFor="let choice of question.choices; let k = index"
+                ˄ Monter
+            </button>
+            <button
+                (click)="moveDown(db.categories, category)"
+                [disabled]="i === db.categories.length - 1"
+            >
+                ˅ Descendre
+            </button>
+            <hr />
+            <ul>
+                <li
+                    class="question"
+                    *ngFor="let question of category.questions; let j = index"
+                >
+                    Question {{ j + 1 }}:
+                    <input type="text" [(ngModel)]="question.label" /><br />
+                    <button (click)="deleteQuestion(category, question)">
+                        X Supprimer question
+                    </button>
+                    <button
+                        (click)="moveUp(category.questions, question)"
+                        [disabled]="j === 0"
                     >
-                        Choix {{ k + 1 }}:
-                        <input type="text" [(ngModel)]="choice.label" /><br />
-                        Bonne réponse
-                        <input
-                            type="checkbox"
-                            [(ngModel)]="choice.isCorrectChoice"
-                        />
-                        <button (click)="deleteChoice(question, choice)">
-                            X Supprimer choix</button
-                        ><br />
-                    </li>
-                </ul>
-                <button (click)="createChoice(question)">Ajouter choix</button>
-                <button (click)="deleteQuestion(category, question)">
-                    X Supprimer question
+                        ˄ Monter
+                    </button>
+                    <button
+                        (click)="moveDown(category.questions, question)"
+                        [disabled]="j === category.questions.length - 1"
+                    >
+                        ˅ Descendre
+                    </button>
+                    <ul>
+                        <li
+                            class="choice"
+                            *ngFor="
+                                let choice of question.choices;
+                                let k = index
+                            "
+                        >
+                            Choix {{ k + 1 }}:
+                            <input
+                                type="text"
+                                [(ngModel)]="choice.label"
+                            /><br />
+                            Bonne réponse
+                            <input
+                                type="checkbox"
+                                [(ngModel)]="choice.isCorrectChoice"
+                            />
+                            <button (click)="deleteChoice(question, choice)">
+                                X Supprimer choix
+                            </button>
+                            <button
+                                (click)="moveUp(question.choices, choice)"
+                                [disabled]="k === 0"
+                            >
+                                ˄ Monter
+                            </button>
+                            <button
+                                (click)="moveDown(question.choices, choice)"
+                                [disabled]="k === question.choices.length - 1"
+                            >
+                                ˅ Descendre
+                            </button>
+                        </li>
+                    </ul>
+                    <button (click)="createChoice(question)">
+                        + Ajouter choix
+                    </button>
+                </li>
+                <button (click)="createQuestion(category)">
+                    + Ajouter question
                 </button>
-            </li>
-            <button (click)="createQuestion(category)">Ajouter question</button>
-        </ul>
-    </li>
-</ul>
+            </ul>
+        </li>
+        <button (click)="createCategory()">+ Ajouter catégorie</button>
+    </ul>
+</div>

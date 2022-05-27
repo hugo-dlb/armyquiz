@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Category, Choice, Database, Question } from './types';
+
+const arrayMove = (array: Array<any>, oldIndex: number, newIndex: number) => {
+    console.log(oldIndex, " -> ", newIndex);
+    array.splice(newIndex, 0, array.splice(oldIndex, 1)[0]);
+};
 
 @Component({
     selector: 'app-root',
@@ -39,7 +44,9 @@ export class AppComponent {
     }
 
     deleteChoice(question: Question, choice: Choice) {
-        question.choices.splice(question.choices.indexOf(choice), 1);
+        if (confirm("Êtes-vous sûr de vouloir supprimer le choix \"" + choice.label + "\" ?")) {
+            question.choices.splice(question.choices.indexOf(choice), 1);
+        }
     }
 
     createQuestion(category: Category) {
@@ -56,7 +63,46 @@ export class AppComponent {
         }
     }
 
+    deleteCategory(category: Category) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer la catégorie \"" + category.label + "\" ?")) {
+            this.db.categories.splice(this.db.categories.indexOf(category), 1);
+        }
+    }
+
+    createCategory() {
+        this.db.categories.push({
+            id: "",
+            label: "",
+            questions: []
+        })
+    }
+
+    moveUp(array: Array<any>, subElement: any) {
+        arrayMove(array, array.indexOf(subElement), array.indexOf(subElement) - 1);
+    }
+
+    moveDown(array: Array<any>, subElement: any) {
+        arrayMove(array, array.indexOf(subElement), array.indexOf(subElement) + 1);
+    }
+
     save() {
+        for (const category of this.db.categories) {
+            for (const question of category.questions) {
+                let i = 0;
+                const correctChoiceIndexes = [];
+                for (const choice of question.choices) {
+                    if (choice.isCorrectChoice) {
+                        correctChoiceIndexes.push(i);
+                    }
+                    i++;
+                }
+                if (correctChoiceIndexes.length === 0) {
+                    alert("La question \"" + question.label + "\" doit avoir au moins une réponse correcte renseignée.");
+                    return;
+                }
+                question.correctChoiceIndexes = correctChoiceIndexes;
+            }
+        }
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([JSON.stringify(this.db, undefined, 4)], { type: `text/json` }));
         a.download = "database.json";
