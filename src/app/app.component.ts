@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Category, Choice, Database, Question } from './types';
+import { v4 as uuidv4 } from 'uuid';
 
 const arrayMove = (array: Array<any>, oldIndex: number, newIndex: number) => {
     console.log(oldIndex, " -> ", newIndex);
@@ -24,6 +25,9 @@ export class AppComponent {
             for (const category of database.categories) {
                 for (const question of category.questions) {
                     let i = 0;
+                    if (!question.uid) {
+                        question.uid = uuidv4();
+                    }
                     for (const choice of question.choices) {
                         choice.isCorrectChoice = question.correctChoiceIndexes.includes(i);
                         i++;

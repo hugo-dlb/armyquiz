@@ -9,6 +9,7 @@ export type Category = {
 }
 
 export type Question = {
+    uid?: string;
     label: string;
     choices: Choice[];
     correctChoiceIndexes: number[];
